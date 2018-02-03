@@ -1,0 +1,30 @@
+[submodule "pack/plugins/start/vim-commentary"]
+	path = pack/plugins/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule "pack/plugins/start/vim-unimpaired"]
+	path = pack/plugins/start/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired
+[submodule "pack/plugins/start/nerdtree"]
+	path = pack/plugins/start/nerdtree
+	url = https://github.com/scrooloose/nerdtree
+[submodule "pack/plugins/start/nerdtree-git-plugin"]
+	path = pack/plugins/start/nerdtree-git-plugin
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin
+[submodule "pack/plugins/start/vim-colorschemes"]
+	path = pack/plugins/start/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes
+[submodule "pack/plugins/start/vimwiki"]
+	path = pack/plugins/start/vimwiki
+	url = https://github.com/vimwiki/vimwiki
+[submodule "pack/plugins/start/vim-taskwarrior"]
+	path = pack/plugins/start/vim-taskwarrior
+	url = https://github.com/blindFS/vim-taskwarrior
+[submodule "pack/plugins/start/airline"]
+	path = pack/plugins/start/airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "pack/plugins/start/airline-themes"]
+	path = pack/plugins/start/airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes
+[submodule "pack/plugins/start/taskwiki"]
+	path = pack/plugins/start/taskwiki
+	url = https://github.com/tbabej/taskwiki
