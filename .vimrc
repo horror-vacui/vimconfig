@@ -9,6 +9,9 @@ set termguicolors
 " set textwidth=80  " This would make automatic hard wrapping
 set number
 
+" Enable GUI mode for the mouse
+set mouse+=a
+
 " Vimtex options go here
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'zathura'
@@ -31,11 +34,13 @@ if machine == "aprosag"
 endif
 
 " colorscheme
-" colorscheme codeschool
+colorscheme codeschool
 
 " airline configuration
-" let g:airline#extensions#tabline#enabled = 1 "enable smart tab line
+let g:airline#extensions#tabline#enabled = 1 "enable smart tab line
 
 " softtab 2 spaces
-let tabstop=2
-let shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
+set expandtab

@@ -28,3 +28,6 @@
 [submodule "pack/plugins/start/taskwiki"]
 	path = pack/plugins/start/taskwiki
 	url = https://github.com/tbabej/taskwiki
+[submodule "pack/plugins/start/vimtex"]
+	path = pack/plugins/start/vimtex
+	url = https://github.com/lervag/vimtex
