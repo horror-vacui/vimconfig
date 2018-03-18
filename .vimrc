@@ -44,3 +44,6 @@ set softtabstop=2
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+" start Voom for .tex files
+autocmd Filetype tex voom latex
