@@ -25,12 +25,15 @@
 [submodule "pack/plugins/start/airline-themes"]
 	path = pack/plugins/start/airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
-[submodule "pack/plugins/start/taskwiki"]
-	path = pack/plugins/start/taskwiki
-	url = https://github.com/tbabej/taskwiki
+# [submodule "pack/plugins/start/taskwiki"]
+# 	path = pack/plugins/start/taskwiki
+# 	url = https://github.com/tbabej/taskwiki
 [submodule "pack/plugins/start/vimtex"]
 	path = pack/plugins/start/vimtex
 	url = https://github.com/lervag/vimtex
+[submodule "pack/plugins/start/ale"]
+	path = pack/plugins/start/ale
+	url = https://github.com/w0rp/ale
 [submodule "pack/plugins/start/voom"]
 	path = pack/plugins/start/voom
 	url = https://github.com/vim-voom/VOoM

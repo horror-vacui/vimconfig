@@ -50,3 +50,6 @@ nnoremap <C-F> :VWS<space>
 
 " spell chacking enabled by default
 set spell spelllang=en_us
+
+" start Voom for .tex files
+autocmd Filetype tex voom latex
