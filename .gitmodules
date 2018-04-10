@@ -31,3 +31,6 @@
 [submodule "pack/plugins/start/vimtex"]
 	path = pack/plugins/start/vimtex
 	url = https://github.com/lervag/vimtex
+[submodule "pack/plugins/start/voom"]
+	path = pack/plugins/start/voom
+	url = https://github.com/vim-voom/VOoM

@@ -44,3 +44,9 @@ set softtabstop=2
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+" map Ctrl+F to :VWS, a.k.a. :VimWikiSearch
+nnoremap <C-F> :VWS<space>
+
+" spell chacking enabled by default
+set spell spelllang=en_us
