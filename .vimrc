@@ -49,7 +49,17 @@ set expandtab
 nnoremap <C-F> :VWS<space>
 
 " spell chacking enabled by default
-set spell spelllang=en_us
+" set spell spelllang=en_us
 
-" start Voom for .tex files
-autocmd Filetype tex voom latex
+" start Voom for .tex and wiki files
+autocmd Filetype tex Voom latex
+autocmd Filetype tex set spell spelllang=en_us
+" autocmd Filetype vimwiki Voom vimwiki
+
+" To fix tmux vim color background issue
+if &term =~ '256color'
+    " disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+    set t_ut=
+endif
