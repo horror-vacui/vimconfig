@@ -52,7 +52,8 @@ nnoremap <C-F> :VWS<space>
 " set spell spelllang=en_us
 
 " start Voom for .tex and wiki files
-autocmd Filetype tex Voom latex
+" autocmd Filetype tex Voom latex " I do not need Voom for LaTeX any more.
+" vimtex has a nice TOC
 autocmd Filetype tex set spell spelllang=en_us
 " autocmd Filetype vimwiki Voom vimwiki
 
@@ -63,3 +64,24 @@ if &term =~ '256color'
     " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
     set t_ut=
 endif
+
+" To make Wq and WQ valid commands
+command WQ wq
+command Wq wq
+command W w
+
+" Some vimtex mappings
+nnoremap <Leader>t :VimtexTocOpen<CR>
+nnoremap <Leader>L :VimtexLabelsOpen<CR>
+
+" Ultisnip
+" " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" It is not true see https://www.youtube.com/watch?v=WeppptWfV-0&list=PLwJS-G75vM7kFO-yUkyNphxSIdbi_1NKX&index=10
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir=expand("~/.vim/ftdetect/")
+" let g:UltiSnipsSnippetDirectories=expand("~/.vim/ftdetect/")
+let g:UltiSnipsSnippetDirectories=["ftdetect"]
