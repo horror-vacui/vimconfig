@@ -25,14 +25,11 @@
 [submodule "pack/plugins/start/airline-themes"]
 	path = pack/plugins/start/airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
-# [submodule "pack/plugins/start/taskwiki"]
-# 	path = pack/plugins/start/taskwiki
-# 	url = https://github.com/tbabej/taskwiki
 [submodule "pack/plugins/start/vimtex"]
 	path = pack/plugins/start/vimtex
 	url = https://github.com/lervag/vimtex
-[submodule "pack/plugins/start/ale"]
-	path = pack/plugins/start/ale
+[submodule "pack/plugins/opt/ale"]
+	path = pack/plugins/opt/ale
 	url = https://github.com/w0rp/ale
 [submodule "pack/plugins/start/voom"]
 	path = pack/plugins/start/voom
@@ -40,3 +37,6 @@
 [submodule "pack/plugins/start/ultisnips"]
 	path = pack/plugins/start/ultisnips
 	url = https://github.com/SirVer/ultisnips
+[submodule "pack/plugins/opt/YouCompleteMe"]
+	path = pack/plugins/opt/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe

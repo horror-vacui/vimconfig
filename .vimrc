@@ -85,3 +85,6 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir=expand("~/.vim/ftdetect/")
 " let g:UltiSnipsSnippetDirectories=expand("~/.vim/ftdetect/")
 let g:UltiSnipsSnippetDirectories=["ftdetect"]
+
+" vim-ycm-latex
+let g:ycm_semantic_triggers = { 'tex'  : ['{'] }
