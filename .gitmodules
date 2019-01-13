@@ -40,3 +40,9 @@
 [submodule "pack/plugins/opt/YouCompleteMe"]
 	path = pack/plugins/opt/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe
+[submodule "pack/plugins/start/vim-grammarous"]
+	path = pack/plugins/start/vim-grammarous
+	url = https://github.com/rhysd/vim-grammarous
+[submodule "pack/plugins/start/recover"]
+	path = pack/plugins/start/recover
+	url = https://github.com/chrisbra/Recover.vim
