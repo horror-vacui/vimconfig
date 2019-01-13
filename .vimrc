@@ -56,7 +56,7 @@ nnoremap <C-F> :VWS<space>
 
 " start Voom for .tex and wiki files
 " autocmd Filetype tex Voom latex " I do not need Voom for LaTeX any more.
-" vimtex has a nice TOC
+" vimtex has a nice TOC!! \lt
 autocmd Filetype tex set spell spelllang=en_us
 " autocmd Filetype vimwiki Voom vimwiki
 
