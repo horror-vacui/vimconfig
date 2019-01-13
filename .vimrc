@@ -8,6 +8,8 @@ set termguicolors
 " make obvious where is the 80th character
 " set textwidth=80  " This would make automatic hard wrapping
 set number
+set background=dark  " need for tmux
+set linebreak " No words will be split by wrap
 
 " Enable GUI mode for the mouse
 set mouse+=a
@@ -15,6 +17,7 @@ set mouse+=a
 " Vimtex options go here
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'zathura'
+
 
 " Load all packages now
 packloadall
