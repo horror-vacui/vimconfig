@@ -1,22 +1,28 @@
 " echo "Loading ~/.vimrc"
 set nocompatible
+" INFO: rtp == runtimepath
 " let &rtp  = '~/.vim/bundle/vimtex,' . &rtp
 " let &rtp .= ',~/.vim/bundle/vimtex/after'
 filetype plugin indent on
 syntax enable
-set termguicolors
+" set termguicolors
 " make obvious where is the 80th character
 " set textwidth=80  " This would make automatic hard wrapping
-set number
-set background=dark  " need for tmux
-set linebreak " No words will be split by wrap
+set linebreak   " No words will be split by wrap
+set ignorecase  " Do case insensitive matching
+set smartcase   " Do smart case matching
+set wildmenu    " show list for command line tab completion
+
+" hybrid line numbering normal, absolute line numbering in insert mode
+set number relativenumber  
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 " Enable GUI mode for the mouse
 set mouse+=a
-
-" Vimtex options go here
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
 
 
 " Load all packages now
@@ -24,6 +30,7 @@ packloadall
 " " Generate help tags from all packages and ignore errors
 silent! helptags ALL
 
+" -------------------------------------------------
 " vimwiki
 let machine = substitute(system('hostname'),'\n','','')
 if machine == "aprosag"
@@ -35,9 +42,37 @@ if machine == "aprosag"
     let wiki_2.path_html = '~/Dropbox/vimwiki2_html/'
     let g:vimwiki_list = [wiki_1, wiki_2]
 endif
+" map Ctrl+F to :VWS, a.k.a. :VimWikiSearch
+nnoremap <C-F> :VWS<space>
+
+" -------------------------------------------------
+" vimtex
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'zathura'
+" nnoremap <Leader>t :VimtexTocOpen<CR> " Already there: \lt
+nnoremap <Leader>L :VimtexLabelsOpen<CR>
+
+let g:vimtex_doc_handlers = ['MyHandler']
+function! MyHandler(context)
+  call vimtex#doc#make_selection(a:context)
+  if !empty(a:context.selected)
+    execute '!texdoc' a:context.selected '&'
+  endif
+  return 1
+endfunction
+" -------------------------------------------------
+
 
 " colorscheme
-colorscheme codeschool
+" change all colorschemes after they are loaded:
+augroup MyColors
+  autocmd!
+  autocmd ColorScheme * highlight CursorLineNr ctermbg=NONE 
+augroup END
+
+" colorscheme codeschool
+colorscheme gruvbox
+set background=dark  "I do not like the light gruvbox
 
 " airline configuration
 let g:airline#extensions#tabline#enabled = 1 "enable smart tab line
@@ -48,15 +83,12 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-" map Ctrl+F to :VWS, a.k.a. :VimWikiSearch
-nnoremap <C-F> :VWS<space>
 
 " spell chacking enabled by default
 " set spell spelllang=en_us
 
 " start Voom for .tex and wiki files
 " autocmd Filetype tex Voom latex " I do not need Voom for LaTeX any more.
-" vimtex has a nice TOC!! \lt
 autocmd Filetype tex set spell spelllang=en_us
 " autocmd Filetype vimwiki Voom vimwiki
 
@@ -73,9 +105,6 @@ command WQ wq
 command Wq wq
 command W w
 
-" Some vimtex mappings
-nnoremap <Leader>t :VimtexTocOpen<CR>
-nnoremap <Leader>L :VimtexLabelsOpen<CR>
 
 " Ultisnip
 " " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
