@@ -1,29 +1,31 @@
 " echo "Loading ~/.vimrc"
 set nocompatible
+" INFO: rtp == runtimepath
 " let &rtp  = '~/.vim/bundle/vimtex,' . &rtp
 " let &rtp .= ',~/.vim/bundle/vimtex/after'
 filetype plugin indent on
 syntax enable
-set termguicolors
+" set termguicolors
 " make obvious where is the 80th character
 " set textwidth=80  " This would make automatic hard wrapping
-set number
-set rnu
-
-" case insensitive search.
-set ignorecase
 set backspace=2 " Backspace deletes as in most programs
 set showcmd
-set cursorline
-set background=dark  " need for tmux
-set linebreak " No words will be split by wrap
+set linebreak   " No words will be split by wrap
+set ignorecase  " Do case insensitive matching
+set smartcase   " Do smart case matching
+set wildmenu    " show list for command line tab completion
+" set cursorline  " show a horizontal line for the current cursor
+
+" hybrid line numbering normal, absolute line numbering in insert mode
+set number relativenumber  
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 " Enable GUI mode for the mouse
 set mouse+=a
-
-" Vimtex options go here
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
 
 
 " Load all packages now
@@ -31,29 +33,49 @@ packloadall
 " " Generate help tags from all packages and ignore errors
 silent! helptags ALL
 
+" -------------------------------------------------
 " vimwiki
 let machine = substitute(system('hostname'),'\n','','')
-" if machine == "aprosag"
-    " let wiki_1 = {}
-    " let wiki_1.path = '~/Dropbox/vimwiki/'
-    " let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
-    " let wiki_2 = {}
-    " let wiki_2.path = '~/Dropbox_vimwiki2/'
-    " let wiki_2.path_html = '~/Dropbox/vimwiki2_html/'
-    " let g:vimwiki_list = [wiki_1, wiki_2]
-" endif
-let wiki_1 = {}
-let wiki_1.path = '~/Dropbox/vimwiki/'
-let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
-let g:vimwiki_list = [wiki_1]
-" move swaps to a different directory. Swaps in Dropbox will often differ...
-set directory=~/.vim/.swp//
-set backupdir=~/.vim/.backup//
-set undodir=~/.vim/.undo//
+if machine == "aprosag"
+    let wiki_1 = {}
+    let wiki_1.path = '~/Dropbox/vimwiki/'
+    let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
+    let wiki_2 = {}
+    let wiki_2.path = '~/Dropbox_vimwiki2/'
+    let wiki_2.path_html = '~/Dropbox/vimwiki2_html/'
+    let g:vimwiki_list = [wiki_1, wiki_2]
+endif
+" map Ctrl+F to :VWS, a.k.a. :VimWikiSearch
+nnoremap <C-F> :VWS<space>
 
+" -------------------------------------------------
+" vimtex
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'zathura'
+" nnoremap <Leader>t :VimtexTocOpen<CR> " Already there: \lt
+nnoremap <Leader>L :VimtexLabelsOpen<CR>
 
+let g:vimtex_doc_handlers = ['MyHandler']
+function! MyHandler(context)
+  call vimtex#doc#make_selection(a:context)
+  if !empty(a:context.selected)
+    execute '!texdoc' a:context.selected '&'
+  endif
+  return 1
+endfunction
+
+" -------------------------------------------------
 " colorscheme
+" change all colorschemes after they are loaded:
+augroup MyColors
+  autocmd!
+  autocmd ColorScheme * highlight CursorLineNr ctermbg=NONE 
+augroup END
+
 " colorscheme codeschool
+colorscheme gruvbox
+set background=dark  "I do not like the light gruvbox
+" -------------------------------------------------
 
 " airline configuration
 let g:airline#extensions#tabline#enabled = 1 "enable smart tab line
@@ -65,14 +87,18 @@ set shiftwidth=2
 set shiftround
 set expandtab " expand tab to spaces
 
-" map Ctrl+F to :VWS, a.k.a. :VimWikiSearch
-nnoremap <C-F> :VWS<space>
+
+" move swaps to a different directory. Swaps in Dropbox will often differ...
+set directory=~/.vim/.swp//
+set backupdir=~/.vim/.backup//
+set undodir=~/.vim/.undo//
+
 
 " spell chacking enabled by default
 " set spell spelllang=en_us
 
-" start Voom for .tex files
-" autocmd Filetype tex Voom latex
+" start Voom for .tex and wiki files
+" autocmd Filetype tex Voom latex " I do not need Voom for LaTeX any more.
 autocmd Filetype tex set spell spelllang=en_us
 
 " Using this command does not show the tree of the file structure, and broke
@@ -94,9 +120,6 @@ command WQ wq
 command Wq wq
 command W w
 
-" Some vimtex mappings
-nnoremap <Leader>t :VimtexTocOpen<CR>
-nnoremap <Leader>L :VimtexLabelsOpen<CR>
 
 " Ultisnip
 " " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.

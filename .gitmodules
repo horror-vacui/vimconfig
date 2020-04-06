@@ -41,7 +41,7 @@
 	path = pack/plugins/opt/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe
 [submodule "pack/plugins/start/vim-grammarous"]
-	path = pack/plugins/start/vim-grammarous
+	path = pack/plugins/opt/vim-grammarous/
 	url = https://github.com/rhysd/vim-grammarous
 [submodule "pack/plugins/start/recover"]
 	path = pack/plugins/start/recover
