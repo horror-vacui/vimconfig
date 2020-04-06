@@ -8,6 +8,13 @@ set termguicolors
 " make obvious where is the 80th character
 " set textwidth=80  " This would make automatic hard wrapping
 set number
+set rnu
+
+" case insensitive search.
+set ignorecase
+set backspace=2 " Backspace deletes as in most programs
+set showcmd
+set cursorline
 set background=dark  " need for tmux
 set linebreak " No words will be split by wrap
 
@@ -26,18 +33,27 @@ silent! helptags ALL
 
 " vimwiki
 let machine = substitute(system('hostname'),'\n','','')
-if machine == "aprosag"
-    let wiki_1 = {}
-    let wiki_1.path = '~/Dropbox/vimwiki/'
-    let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
-    let wiki_2 = {}
-    let wiki_2.path = '~/Dropbox_vimwiki2/'
-    let wiki_2.path_html = '~/Dropbox/vimwiki2_html/'
-    let g:vimwiki_list = [wiki_1, wiki_2]
-endif
+" if machine == "aprosag"
+    " let wiki_1 = {}
+    " let wiki_1.path = '~/Dropbox/vimwiki/'
+    " let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
+    " let wiki_2 = {}
+    " let wiki_2.path = '~/Dropbox_vimwiki2/'
+    " let wiki_2.path_html = '~/Dropbox/vimwiki2_html/'
+    " let g:vimwiki_list = [wiki_1, wiki_2]
+" endif
+let wiki_1 = {}
+let wiki_1.path = '~/Dropbox/vimwiki/'
+let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
+let g:vimwiki_list = [wiki_1]
+" move swaps to a different directory. Swaps in Dropbox will often differ...
+set directory=~/.vim/.swp//
+set backupdir=~/.vim/.backup//
+set undodir=~/.vim/.undo//
+
 
 " colorscheme
-colorscheme codeschool
+" colorscheme codeschool
 
 " airline configuration
 let g:airline#extensions#tabline#enabled = 1 "enable smart tab line
@@ -46,7 +62,8 @@ let g:airline#extensions#tabline#enabled = 1 "enable smart tab line
 set softtabstop=2
 set tabstop=2
 set shiftwidth=2
-set expandtab
+set shiftround
+set expandtab " expand tab to spaces
 
 " map Ctrl+F to :VWS, a.k.a. :VimWikiSearch
 nnoremap <C-F> :VWS<space>
@@ -54,11 +71,15 @@ nnoremap <C-F> :VWS<space>
 " spell chacking enabled by default
 " set spell spelllang=en_us
 
-" start Voom for .tex and wiki files
-" autocmd Filetype tex Voom latex " I do not need Voom for LaTeX any more.
-" vimtex has a nice TOC
+" start Voom for .tex files
+" autocmd Filetype tex Voom latex
 autocmd Filetype tex set spell spelllang=en_us
+
+" Using this command does not show the tree of the file structure, and broke
+" vimwiki in a way, that links are not opened. Voom was cloned on 2018-03-19
+" No wimwiki use of this
 " autocmd Filetype vimwiki Voom vimwiki
+" autocmd Filetype python Voom python
 
 " To fix tmux vim color background issue
 if &term =~ '256color'
@@ -89,5 +110,38 @@ let g:UltiSnipsSnippetsDir=expand("~/.vim/ftdetect/")
 " let g:UltiSnipsSnippetDirectories=expand("~/.vim/ftdetect/")
 let g:UltiSnipsSnippetDirectories=["ftdetect"]
 
+" Will not be used until YCM and US conflicts are not resolved.
 " vim-ycm-latex
-let g:ycm_semantic_triggers = { 'tex'  : ['{'] }
+" let g:ycm_semantic_triggers = { 'tex'  : ['{'] }
+
+" No spell checking in tex comments
+let g:tex_comment_nospell=1
+
+" Spell check highlight: underline bad words, and change their color to green
+hi SpellBad cterm=underline ctermfg=green 
+hi SpellRare cterm=underline
+
+" saving folds
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  " The '!' is important it avoids the error message, that thtere were no
+  " folds previously - for example: new empty buffer
+  autocmd BufWinEnter * silent! loadview
+augroup END
+
+" Faster window change
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Navigate properly when lines are wrapped
+nnoremap j gj
+nnoremap k gk
+
+" Load all packages now
+packloadall
+" Generate help tags from all packages and ignore errors
+silent! helptags ALL
+
