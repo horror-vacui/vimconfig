@@ -1,8 +1,5 @@
 " echo "Loading ~/.vimrc"
 set nocompatible
-" INFO: rtp == runtimepath
-" let &rtp  = '~/.vim/bundle/vimtex,' . &rtp
-" let &rtp .= ',~/.vim/bundle/vimtex/after'
 filetype plugin indent on
 syntax enable
 " set termguicolors
@@ -27,12 +24,6 @@ augroup END
 " Enable GUI mode for the mouse
 set mouse+=a
 
-
-" Load all packages now
-packloadall
-" " Generate help tags from all packages and ignore errors
-silent! helptags ALL
-
 " -------------------------------------------------
 " vimwiki
 let machine = substitute(system('hostname'),'\n','','')
@@ -49,22 +40,6 @@ endif
 nnoremap <C-F> :VWS<space>
 
 " -------------------------------------------------
-" vimtex
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
-" nnoremap <Leader>t :VimtexTocOpen<CR> " Already there: \lt
-nnoremap <Leader>L :VimtexLabelsOpen<CR>
-
-let g:vimtex_doc_handlers = ['MyHandler']
-function! MyHandler(context)
-  call vimtex#doc#make_selection(a:context)
-  if !empty(a:context.selected)
-    execute '!texdoc' a:context.selected '&'
-  endif
-  return 1
-endfunction
-
-" -------------------------------------------------
 " colorscheme
 " change all colorschemes after they are loaded:
 augroup MyColors
@@ -75,8 +50,8 @@ augroup END
 " colorscheme codeschool
 colorscheme gruvbox
 set background=dark  "I do not like the light gruvbox
-" -------------------------------------------------
 
+" -------------------------------------------------
 " airline configuration
 let g:airline#extensions#tabline#enabled = 1 "enable smart tab line
 
@@ -88,6 +63,7 @@ set shiftround
 set expandtab " expand tab to spaces
 
 
+" ------------------------------------------
 " move swaps to a different directory. Swaps in Dropbox will often differ...
 set directory=~/.vim/.swp//
 set backupdir=~/.vim/.backup//
@@ -96,10 +72,14 @@ set undodir=~/.vim/.undo//
 
 " spell chacking enabled by default
 " set spell spelllang=en_us
+" Spell check highlight: underline bad words, and change their color to green
+hi SpellBad cterm=underline ctermfg=green 
+hi SpellRare cterm=underline
 
-" start Voom for .tex and wiki files
-" autocmd Filetype tex Voom latex " I do not need Voom for LaTeX any more.
-autocmd Filetype tex set spell spelllang=en_us
+
+" " start Voom for .tex and wiki files
+" " autocmd Filetype tex Voom latex " I do not need Voom for LaTeX any more.
+" autocmd Filetype tex set spell spelllang=en_us
 
 " Using this command does not show the tree of the file structure, and broke
 " vimwiki in a way, that links are not opened. Voom was cloned on 2018-03-19
@@ -121,6 +101,7 @@ command Wq wq
 command W w
 
 
+" ------------------------------------------
 " Ultisnip
 " " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 " It is not true see https://www.youtube.com/watch?v=WeppptWfV-0&list=PLwJS-G75vM7kFO-yUkyNphxSIdbi_1NKX&index=10
@@ -133,16 +114,10 @@ let g:UltiSnipsSnippetsDir=expand("~/.vim/ftdetect/")
 " let g:UltiSnipsSnippetDirectories=expand("~/.vim/ftdetect/")
 let g:UltiSnipsSnippetDirectories=["ftdetect"]
 
+" ------------------------------------------
 " Will not be used until YCM and US conflicts are not resolved.
 " vim-ycm-latex
 " let g:ycm_semantic_triggers = { 'tex'  : ['{'] }
-
-" No spell checking in tex comments
-let g:tex_comment_nospell=1
-
-" Spell check highlight: underline bad words, and change their color to green
-hi SpellBad cterm=underline ctermfg=green 
-hi SpellRare cterm=underline
 
 " saving folds
 augroup AutoSaveFolds
@@ -153,6 +128,8 @@ augroup AutoSaveFolds
   autocmd BufWinEnter * silent! loadview
 augroup END
 
+" ------------------------------------------
+" Key mappings
 " Faster window change
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -163,8 +140,71 @@ nnoremap <C-l> <C-w>l
 nnoremap j gj
 nnoremap k gk
 
+" gvim S-insert 
+if has("gui_running")
+  map  <silent>  <S-Insert>  "+p
+  imap <silent>  <S-Insert>  <Esc>"+pa
+endif
+" ------------------------------------------
+
 " Load all packages now
 packloadall
 " Generate help tags from all packages and ignore errors
 silent! helptags ALL
+
+
+" ------------------------------------------
+"  default vim size: try
+if has("gui_running")
+  set lines=999 columns=100
+  " if lines are more than what the can be displayed in the monitor, the
+  " value of lines will be reset to fill the screen in the given dimension. it
+  " is the case only for gvim!
+" else
+" "  if machine == "aprosag"
+"     if exists("+lines")
+"       set lines=28 
+"       " 28 lines are displayed as vertical half of my home monitor
+"     endif
+"     if exists("+columns")
+"       set columns=80
+"       " it almost allows three windows next to each other horizontally
+"     endif
+"   " endif
+endif  
+
+" -------------------------------------------------
+" Moved a few key remapping to the end: packload will not overwrite with
+" default
+" -------------------------------------------------
+" vimtex
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'zathura'
+" nnoremap <Leader>t :VimtexTocOpen<CR> " Already there: \lt
+" nnoremap <Leader>L :VimtexLabelsOpen<CR>
+
+" Increase ToC width
+let g:vimtex_toc_config ={'split_width':50}
+
+" Look up package documentation
+let g:vimtex_doc_handlers = ['MyHandler']
+function! MyHandler(context)
+  call vimtex#doc#make_selection(a:context)
+  if !empty(a:context.selected)
+    execute '!texdoc' a:context.selected '&'
+  endif
+  return 1
+endfunction
+
+" for svg and minted packages; They require --shell-escape 
+" let g:vimtex_latexmk_options = '-shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode' " depreciatied
+let g:vimtex_compiler_latexmk = {'options':[ '-shell-escape', '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode']}
+" let g:vimtex_compiler_latexmk_engines = 'pdf'  " this is the deafult value
+
+" let debug_var = 123
+let maplocalleader="\<space>"
+
+" -------------------------------------------------
+" vimux
+" autocmd Filetype python nnoremap <F5> :update<BAR>:call VimuxRunCommandInDir("python3",1)<CR>
 

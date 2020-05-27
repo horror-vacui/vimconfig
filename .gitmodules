@@ -46,3 +46,6 @@
 [submodule "pack/plugins/start/recover"]
 	path = pack/plugins/start/recover
 	url = https://github.com/chrisbra/Recover.vim
+[submodule "pack/plugins/start/vimux"]
+	path = pack/plugins/start/vimux
+	url = https://github.com/benmills/vimux.git
