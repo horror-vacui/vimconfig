@@ -208,3 +208,6 @@ let maplocalleader="\<space>"
 " vimux
 " autocmd Filetype python nnoremap <F5> :update<BAR>:call VimuxRunCommandInDir("python3",1)<CR>
 
+" ctags
+set tags=./tags,tags;
+set autochdir
