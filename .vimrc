@@ -211,3 +211,20 @@ let maplocalleader="\<space>"
 " ctags
 set tags=./tags,tags;
 set autochdir
+
+" " Voom for wiki files
+" augroup UpdateVoom
+"   autocmd!
+"   autocmd BufEnter *.wiki  
+" augroup END
+
+" allow persistent undo
+" The undodir must exist for this function
+set undofile
+set undodir=$HOME/.vim/undo
+" there are some security concerns. 
+" To disable undofile for a some files the autocommand below can be used
+" augroup vimrc
+"   autocmd!
+"   autocmd BufWritePre /tmp/* setlocal noundofile
+" augroup END
