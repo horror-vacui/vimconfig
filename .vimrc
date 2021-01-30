@@ -35,6 +35,11 @@ if machine == "aprosag"
     let wiki_2.path = '~/Dropbox_vimwiki2/'
     let wiki_2.path_html = '~/Dropbox/vimwiki2_html/'
     let g:vimwiki_list = [wiki_1, wiki_2]
+elseif machine == "ccn-bar223bl"
+    let wiki_1 = {}
+    let wiki_1.path = '~/Dropbox/vimwiki/'
+    let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
+    let g:vimwiki_list = [wiki_1]
 endif
 " map Ctrl+F to :VWS, a.k.a. :VimWikiSearch
 nnoremap <C-F> :VWS<space>
