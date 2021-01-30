@@ -228,3 +228,12 @@ set undodir=$HOME/.vim/undo
 "   autocmd!
 "   autocmd BufWritePre /tmp/* setlocal noundofile
 " augroup END
+"
+"
+" -------------------------------------------------
+" Copy between tmux panes
+" copy to buffer
+vmap <C-c> :w! ~/.vimbuffer<CR>
+nmap <C-c> :.w! ~/.vimbuffer<CR>
+" paste from buffer
+map <C-p> :r ~/.vimbuffer<CR>
