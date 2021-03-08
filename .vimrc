@@ -182,34 +182,6 @@ endif
 " Moved a few key remapping to the end: packload will not overwrite with
 " default
 " -------------------------------------------------
-" vimtex
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
-" nnoremap <Leader>t :VimtexTocOpen<CR> " Already there: \lt
-" nnoremap <Leader>L :VimtexLabelsOpen<CR>
-
-" Increase ToC width
-let g:vimtex_toc_config ={'split_width':50}
-
-" Look up package documentation
-let g:vimtex_doc_handlers = ['MyHandler']
-function! MyHandler(context)
-  call vimtex#doc#make_selection(a:context)
-  if !empty(a:context.selected)
-    execute '!texdoc' a:context.selected '&'
-  endif
-  return 1
-endfunction
-
-" for svg and minted packages; They require --shell-escape 
-" let g:vimtex_latexmk_options = '-shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode' " depreciatied
-let g:vimtex_compiler_latexmk = {'options':[ '-shell-escape', '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode']}
-" let g:vimtex_compiler_latexmk_engines = 'pdf'  " this is the deafult value
-
-" let debug_var = 123
-let maplocalleader="\<space>"
-
-" -------------------------------------------------
 " vimux
 " autocmd Filetype python nnoremap <F5> :update<BAR>:call VimuxRunCommandInDir("python3",1)<CR>
 
@@ -242,3 +214,4 @@ vmap <C-c> :w! ~/.vimbuffer<CR>
 nmap <C-c> :.w! ~/.vimbuffer<CR>
 " paste from buffer
 map <C-p> :r ~/.vimbuffer<CR>
+

@@ -8,7 +8,7 @@ endsnippet
 snippet fig "create figure"
 \begin{figure}
 	\centering
-	\includegraphics[width=0.475\textwidth,keepaspectratio]{\string$0}
+	\includegraphics[width=0.475\textwidth,keepaspectratio]{pictures/$0}
 	\caption{${1:Figure caption}}
 	\label{fig:${2:label}}
 \end{figure}
@@ -24,4 +24,18 @@ endsnippet
 
 snippet tr "red text"
 \textcolor{red}{$1}
+endsnippet
+
+snippet item "itemize"
+\begin{itemize}
+	\item $0
+\end{itemize}
+endsnippet
+
+snippet frame "presentation slide"
+\begin{frame}{$0}
+	\begin{itemize}
+		\item
+	\end{itemize}
+\end{frame}
 endsnippet
