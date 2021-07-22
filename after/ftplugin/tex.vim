@@ -6,7 +6,7 @@ let g:tex_comment_nospell=1
 
 
 let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
+" let g:vimtex_view_method = 'zathura'
 " nnoremap <Leader>t :VimtexTocOpen<CR> " Already there: \lt
 " nnoremap <Leader>L :VimtexLabelsOpen<CR>
 
@@ -23,34 +23,24 @@ function! MyHandler(context)
   return 1
 endfunction
 
-" reduce the scope of autocompletion
-
-let g:debug_var_123 = 123
 
 " for svg and minted packages; They require --shell-escape 
 " let g:vimtex_latexmk_options = '-shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode' " depreciatied
 let g:vimtex_compiler_latexmk = {
-  \ 'build_dir':'build',
   \ 'callback':1, 
   \ 'options':[ 
-  \     '-pdf', 
   \     '-shell-escape', 
   \     '-verbose', 
   \     '-file-line-error', 
   \     '-synctex=1', 
   \     '-interaction=nonstopmode'
   \ ]}
+  " \     '-pdf', 
 " let g:vimtex_compiler_latexmk_engines = '-pdf' 
+"  \ 'build_dir':'build',  Something might be wrong with bibtex
 
 " let debug_var = 123
-let maplocalleader="\<space>"
-
-augroup vimtex_events
-  " au! removes all previously existing command in the augroup
-  au! 
-  au User VimtexEventTocActivated normal! zt
-  au FileType tex call CreateTocsZti()
-augroup END
+" let maplocalleader="\<space>"
 
 " ToC just sections
 function! CreateTocsZti()
@@ -84,6 +74,13 @@ function! CreateTocsZti()
     " nmap <silent> <localleader>lT :call g:l_todo.open()<cr>
     nmap <localleader>lT :call g:l_todo.open()<cr>
 endfunction
+
+augroup vimtex_events
+  " au! removes all previously existing command in the augroup
+  au! 
+  au User VimtexEventTocActivated normal! zt
+  " au FileType tex call CreateTocsZti()
+augroup END
 
 
 " Test whether the file is loaded

@@ -12,6 +12,7 @@ set ignorecase  " Do case insensitive matching
 set smartcase   " Do smart case matching
 set wildmenu    " show list for command line tab completion
 " set cursorline  " show a horizontal line for the current cursor
+set hidden      " allow to move into other buffers before saving another one
 
 " hybrid line numbering normal, absolute line numbering in insert mode
 set number relativenumber  
@@ -27,7 +28,9 @@ set mouse+=a
 " -------------------------------------------------
 " vimwiki
 let machine = substitute(system('hostname'),'\n','','')
-if machine == "aprosag"
+if machine == "aprosag" || machine == "adrian"
+    " echo "Were are home!"  " visual reassurance that we reach this point in
+    " the code
     let wiki_1 = {}
     let wiki_1.path = '~/Dropbox/vimwiki/'
     let wiki_1.path_html = '~/Dropbox/vimwiki_html/'
@@ -106,18 +109,6 @@ command Wq wq
 command W w
 
 
-" ------------------------------------------
-" Ultisnip
-" " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-" It is not true see https://www.youtube.com/watch?v=WeppptWfV-0&list=PLwJS-G75vM7kFO-yUkyNphxSIdbi_1NKX&index=10
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetsDir=expand("~/.vim/ftdetect/")
-" let g:UltiSnipsSnippetDirectories=expand("~/.vim/ftdetect/")
-let g:UltiSnipsSnippetDirectories=["ftdetect"]
 
 " ------------------------------------------
 " Will not be used until YCM and US conflicts are not resolved.
@@ -151,9 +142,48 @@ if has("gui_running")
   imap <silent>  <S-Insert>  <Esc>"+pa
 endif
 " ------------------------------------------
+"  vimtex
+" flavor not needed after VimTeX 2.0
+" let g:tex_flavor = 'latex'  " this needs to be before packload!
+" It will not work in after/ftplugin/tex.vim
+let g:vimtex_view_method = 'zathura'
+" nnoremap <Leader>t :VimtexTocOpen<CR> " Already there: \lt
+" nnoremap <Leader>L :VimtexLabelsOpen<CR>
+
+" It was also part of after/tex.vim
+"    " Increase ToC width
+"    let g:vimtex_toc_config ={'split_width':50}
+
+" Citation autocompletion
+let g:vimtex_complete_enabled = 1
+let g:vimtex_complete_bib = { 'simple':1 }
+
+" It was also part of after/tex.vim
+" Look up package documentation
+let g:vimtex_doc_handlers = ['MyHandler']
+function! MyHandler(context)
+  call vimtex#doc#make_selection(a:context)
+  if !empty(a:context.selected)
+    execute '!texdoc' a:context.selected '&'
+  endif
+  return 1
+endfunction
+
+" Increase ToC width
+let g:vimtex_toc_config ={'split_width':50}
+
+" for svg and minted packages; They require --shell-escape 
+" let g:vimtex_latexmk_options = '-shell-escape -verbose -file-line-error -synctex=1 -interaction=nonstopmode' " depreciatied
+" let g:vimtex_compiler_latexmk = {'options':[ '-shell-escape', '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode']}
+" let g:vimtex_compiler_latexmk_engines = 'pdf'  " this is the deafult value
+
+" let debug_var = 123
+" let maplocalleader="\<space>"
+" ------------------------------------------
+
 
 " Load all packages now
-packloadall
+" packloadall
 " Generate help tags from all packages and ignore errors
 silent! helptags ALL
 
@@ -213,5 +243,17 @@ set undodir=$HOME/.vim/undo
 vmap <C-c> :w! ~/.vimbuffer<CR>
 nmap <C-c> :.w! ~/.vimbuffer<CR>
 " paste from buffer
-map <C-p> :r ~/.vimbuffer<CR>
+map <C-i> :r ~/.vimbuffer<CR>
 
+" ------------------------------------------
+" Ultisnip
+" " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" It is not true see https://www.youtube.com/watch?v=WeppptWfV-0&list=PLwJS-G75vM7kFO-yUkyNphxSIdbi_1NKX&index=10
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetsDir=expand("~/.vim/ftdetect/")
+" let g:UltiSnipsSnippetDirectories=expand("~/.vim/ftdetect/")
+let g:UltiSnipsSnippetDirectories=["ftdetect"]
